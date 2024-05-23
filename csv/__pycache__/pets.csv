@@ -1,0 +1,8 @@
+pet_id,pet_name,pet_category_id,pet_category_name,pet_tag_id,pet_tag_name
+389,Schott,1,dog,1,vacinado
+pet_id,pet_name,pet_category_id,pet_category_name,pet_tag_id,pet_tag_name
+390,Max,1,dog,2,castrado
+391,Whiskers,2,cat,1,vacinado
+392,Bella,1,dog,3,adestrado
+393,Charlie,1,dog,2,castrado
+394,Luna,2,cat,4,chipado
