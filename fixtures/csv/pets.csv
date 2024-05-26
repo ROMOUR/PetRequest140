@@ -1,0 +1,6 @@
+pet_id,category_id,category_name,pet_name,tags,status
+390,1,dog,Max,2-castrado,available
+391,2,cat,Whiskers,1-vacinado,available
+392,1,dog,Bella,3-adestrado,available
+393,1,dog,Charlie,2-castrado,available
+394,2,cat,Luna,4-chipado,available

@@ -1,0 +1,6 @@
+user_id,user_username,user_firstname,user_lastname,user_email,user_password,user_phone,user_status
+3899963941,Rodolfo,test,Moura,rodolfo_itg@yahoo.com.br,12345,996394136,1
+3899963942,Max,test,Smith,max_smith@example.com,password,1234567890,1
+3899963943,Bella,test,Johnson,bella_johnson@example.com,passwd,0987654321,0
+3899963944,Charlie,test,Evans,charlie_evans@example.com,my_pass,1112223333,1
+3899963945,Luna,test,Davis,luna_davis@example.com,123abc,4445556666,0

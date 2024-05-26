@@ -15,25 +15,24 @@ user_status = 1
 url= 'https://petstore.swagger.io/v2/user'                 
 headers= {'Content-type':"application/json"}  
 
-def test_post_user():
-    user = open('./fixtures/json/user1.json')        
-    data = json.loads(user.read())                  
+def load_json(filepath):
+    with open(filepath, 'r') as file:
+        return json.load(file)
 
-   
+def test_post_user():
+    data = load_json('./fixtures/json/user1.json')
+
     response = requests.post(
-        url = url,
-        headers = headers,
-        data = json.dumps(data),
-        timeout = 5
-    ) 
+        url=url,
+        headers=headers,
+        data=json.dumps(data),
+        timeout=5
+    )
     response_body = response.json()                 
     
-
     assert response.status_code == 200 
 
-
 def test_get_user():
-
     response = requests.get(
         url=f'{url}/{user_username}',
         headers=headers,
@@ -42,26 +41,22 @@ def test_get_user():
     response_body = response.json()
 
     assert response.status_code == 200
-    
-def test_put_user():
 
-    user = open('./fixtures/json/user2.json')
-    data = json.loads(user.read())
+def test_put_user():
+    data = load_json('./fixtures/json/user2.json')
 
     response = requests.put(
         url=f'{url}/{user_username}',
         headers=headers,
         data=json.dumps(data),
-        timeout= 5 
+        timeout=5 
     )
 
     response_body = response.json()
 
     assert response.status_code == 200 
 
-
 def test_delete_user():
-
     response = requests.delete(
         url=f'{url}/{user_username}',
         headers=headers,
@@ -74,35 +69,23 @@ def test_delete_user():
     assert response_body['type'] == 'unknown'
     assert response_body['message'] == user_username
 
-
-
-@pytest.mark.parametrize('user_id,user_username,user_firstname,user_lastname,user_email,user_password,user_phone,user_status',
-                         ler_csv('./fixtures/csv/user.csv')
-                         )
-
-
-
-def test_post_user_dinamico(user_id,user_username,user_firstname,user_lastname,user_email,user_password,user_phone,user_status):
-    user = {}     # lista vazia pet 
-    user['id'] = int(user_id)
-    user['username'] = user_username
-    user['firstName'] = user_firstname
-    user['lastName'] = user_lastname
-    user['email'] = user_email
-    user['password'] = user_password
-    user['phone'] = user_phone
-    user['user_Status'] = user_status
-
-
-
-    user = json.dumps(obj=user, indent=4)
-    print('\n' + user)                     
-
+@pytest.mark.parametrize('user_id,user_username,user_firstname,user_lastname,user_email,user_password,user_phone,user_status', ler_csv('./fixtures/csv/user.csv'))
+def test_post_user_from_csv(user_id, user_username, user_firstname, user_lastname, user_email, user_password, user_phone, user_status):
+    user = {
+        'id': int(user_id),
+        'username': user_username,
+        'firstName': user_firstname,
+        'lastName': user_lastname,
+        'email': user_email,
+        'password': user_password,
+        'phone': user_phone,
+        'userStatus': int(user_status)
+    }
 
     response = requests.post(
         url=url,
         headers=headers,
-        data=user,
+        data=json.dumps(user),
         timeout=5
     )
     
@@ -110,37 +93,17 @@ def test_post_user_dinamico(user_id,user_username,user_firstname,user_lastname,u
 
     assert response.status_code == 200
 
-
-
-@pytest.mark.parametrize('user_id,user_username,user_firstname,user_lastname,user_email,user_password,user_phone,user_status',
-                         ler_csv('./fixtures/csv/user.csv')
-                         )
-
-
-
-def test_post_user_dinamico(user_id,user_username,user_firstname,user_lastname,user_email,user_password,user_phone,user_status):
-    
-    user = {}     # lista vazia pet 
-    user['id'] = int(user_id)
-    user['username'] = user_username
-    user['firstName'] = user_firstname
-    user['lastName'] = user_lastname
-    user['email'] = user_email
-    user['password'] = user_password
-    user['phone'] = user_phone
-    user['user_Status'] = user_status
-    
-
+@pytest.mark.parametrize('user_id,user_username,user_firstname,user_lastname,user_email,user_password,user_phone,user_status', ler_csv('./fixtures/csv/user.csv'))
+def test_delete_user_from_csv(user_id, user_username, user_firstname, user_lastname, user_email, user_password, user_phone, user_status):
     response = requests.delete(
         url=f'{url}/{user_username}',
         headers=headers,
-        data=user,
         timeout=5
     )
-    #compara
+    
     response_body = response.json()
 
     assert response.status_code == 200 
     assert response_body['code'] == 200 
     assert response_body['type'] == 'unknown'
-    assert response_body['message'] == user
+    assert response_body['message'] == user_username
